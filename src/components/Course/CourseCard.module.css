@@ -1,0 +1,158 @@
+.card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Image */
+
+.imageWrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content */
+
+.content {
+  padding: 18px;
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #111827;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.description {
+  margin: 0 0 14px;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta information */
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.level {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.rating {
+  color: #f59e0b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.students {
+  margin: 0 0 14px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Price */
+
+.priceWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.originalPrice {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.discount {
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Button */
+
+.button {
+  width: 100%;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 7px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: #1f2937;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .imageWrapper {
+    height: 180px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
