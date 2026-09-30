@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../hooks/fetchUser";
 
 import { useCourse } from "../state-mangement/CourseContextAPI";
 
 import styles from "./CourseDetails.module.css";
+
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  const isAdmin = user?.role?.toLowerCase() === "admin";
 
   const {
     currentCourse,
@@ -33,7 +39,6 @@ const CourseDetails = () => {
     );
   }
 
-
   // =====================================
   // ERROR
   // =====================================
@@ -45,14 +50,13 @@ const CourseDetails = () => {
 
         <button
           className={styles.backButton}
-          onClick={() => navigate("/currentCourse")}
+          onClick={() => navigate("/courses")}
         >
           Back to Courses
         </button>
       </div>
     );
   }
-
 
   // =====================================
   // NO COURSE
@@ -72,7 +76,6 @@ const CourseDetails = () => {
       </div>
     );
   }
-
 
   // =====================================
   // COURSE DATA
@@ -94,7 +97,6 @@ const CourseDetails = () => {
     courseData = [],
   } = currentCourse;
 
-
   // =====================================
   // DISCOUNT
   // =====================================
@@ -102,12 +104,9 @@ const CourseDetails = () => {
   const discount =
     estimatedPrice && price
       ? Math.round(
-        ((estimatedPrice - price) /
-          estimatedPrice) *
-        100
-      )
+          ((estimatedPrice - price) / estimatedPrice) * 100
+        )
       : 0;
-
 
   return (
     <main className={styles.page}>
@@ -122,7 +121,6 @@ const CourseDetails = () => {
       >
         ← Back to Courses
       </button>
-
 
       {/* ================================
           HERO
@@ -144,7 +142,6 @@ const CourseDetails = () => {
           />
         </div>
 
-
         {/* COURSE INFORMATION */}
 
         <div className={styles.info}>
@@ -153,16 +150,13 @@ const CourseDetails = () => {
             {level}
           </span>
 
-
           <h1 className={styles.title}>
             {name}
           </h1>
 
-
           <p className={styles.description}>
             {description}
           </p>
-
 
           <div className={styles.rating}>
             ⭐ {rating || 0}
@@ -171,7 +165,6 @@ const CourseDetails = () => {
               ({purchased || 0} students enrolled)
             </span>
           </div>
-
 
           {/* PRICE */}
 
@@ -182,68 +175,69 @@ const CourseDetails = () => {
             </span>
 
             {estimatedPrice && (
-              <del
-                className={
-                  styles.originalPrice
-                }
-              >
+              <del className={styles.originalPrice}>
                 ₹{estimatedPrice}
               </del>
             )}
 
             {discount > 0 && (
-              <span
-                className={styles.discount}
-              >
+              <span className={styles.discount}>
                 {discount}% OFF
               </span>
             )}
 
           </div>
 
+          {/* ================================
+              ADMIN / USER ACTIONS
+          ================================= */}
 
-          {/* PURCHASE */}
-
-          <button
-            className={styles.purchaseButton}
-          >
-            Buy This Course
-          </button>
-          <button
-            type="button"
-            className={styles.demoButton}
-            onClick={() =>
-              navigate(`/admin/admin-dashboard/edit-course/${id}`)
-            }
-          >
-            Edit Course
-          </button>
-          {/* DEMO */}
-
-          {demoUrl && (
-            <a
-              href={demoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.demoButton}
+          {isAdmin ? (
+            <button
+              type="button"
+              className={styles.purchaseButton}
+              onClick={() =>
+                navigate(
+                  `/admin/admin-dashboard/edit-course/${id}`
+                )
+              }
             >
-              Watch Demo
-            </a>
+              Edit Course
+            </button>
+          ) : (
+            <>
+              {/* BUY COURSE */}
+
+              <button
+                className={styles.purchaseButton}
+              >
+                Buy This Course
+              </button>
+
+              {/* WATCH DEMO */}
+
+              {demoUrl && (
+                <a
+                  href={demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.demoButton}
+                >
+                  Watch Demo
+                </a>
+              )}
+            </>
           )}
 
         </div>
-
       </section>
-
 
       {/* ================================
           BENEFITS
       ================================= */}
 
       {benefits.length > 0 && (
-        <section
-          className={styles.section}
-        >
+        <section className={styles.section}>
 
           <h2>
             What You'll Learn
@@ -251,32 +245,26 @@ const CourseDetails = () => {
 
           <ul className={styles.list}>
 
-            {benefits.map(
-              (benefit, index) => (
-                <li key={index}>
-                  ✓{" "}
-                  {typeof benefit ===
-                    "string"
-                    ? benefit
-                    : benefit?.title}
-                </li>
-              )
-            )}
+            {benefits.map((benefit, index) => (
+              <li key={index}>
+                ✓{" "}
+                {typeof benefit === "string"
+                  ? benefit
+                  : benefit?.title}
+              </li>
+            ))}
 
           </ul>
 
         </section>
       )}
 
-
       {/* ================================
           PREREQUISITES
       ================================= */}
 
       {prerequisites.length > 0 && (
-        <section
-          className={styles.section}
-        >
+        <section className={styles.section}>
 
           <h2>
             Prerequisites
@@ -284,32 +272,26 @@ const CourseDetails = () => {
 
           <ul className={styles.list}>
 
-            {prerequisites.map(
-              (item, index) => (
-                <li key={index}>
-                  •{" "}
-                  {typeof item ===
-                    "string"
-                    ? item
-                    : item?.title}
-                </li>
-              )
-            )}
+            {prerequisites.map((item, index) => (
+              <li key={index}>
+                •{" "}
+                {typeof item === "string"
+                  ? item
+                  : item?.title}
+              </li>
+            ))}
 
           </ul>
 
         </section>
       )}
 
-
       {/* ================================
           TAGS
       ================================= */}
 
       {tags && (
-        <section
-          className={styles.section}
-        >
+        <section className={styles.section}>
 
           <h2>
             Course Tags
@@ -333,15 +315,12 @@ const CourseDetails = () => {
         </section>
       )}
 
-
       {/* ================================
           COURSE CONTENT
       ================================= */}
 
       {courseData.length > 0 && (
-        <section
-          className={styles.section}
-        >
+        <section className={styles.section}>
 
           <h2>
             Course Content
@@ -349,35 +328,28 @@ const CourseDetails = () => {
 
           <div>
 
-            {courseData.map(
-              (video, index) => (
-                <article
-                  key={index}
-                >
+            {courseData.map((video, index) => (
+              <article key={index}>
 
-                  <h3>
-                    {index + 1}.{" "}
-                    {video.title}
-                  </h3>
+                <h3>
+                  {index + 1}. {video.title}
+                </h3>
 
-                  <p>
-                    {video.description}
-                  </p>
+                <p>
+                  {video.description}
+                </p>
 
-                  <span>
-                    Section:{" "}
-                    {video.videoSection}
-                  </span>
+                <span>
+                  Section: {video.videoSection}
+                </span>
 
-                  <span>
-                    {" "}
-                    | Length:{" "}
-                    {video.videoLength} minutes
-                  </span>
+                <span>
+                  {" "}
+                  | Length: {video.videoLength} minutes
+                </span>
 
-                </article>
-              )
-            )}
+              </article>
+            ))}
 
           </div>
 

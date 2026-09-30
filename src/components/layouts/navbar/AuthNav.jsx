@@ -15,15 +15,21 @@ const AuthNav = () => {
   return (
     <>
       <li>
-        <Link to="#">Dashboard</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </li>
+
       <li>
         {user?.role === "admin" ? (
-          <Link to="/admin/admin-dashboard">{user?.name}</Link>
+          <Link to="/admin/admin-dashboard">
+            {user?.name}
+          </Link>
         ) : (
-          <Link to="/user/profile">{user?.name}</Link>
+          <Link to="/user/profile">
+            {user?.name}
+          </Link>
         )}
       </li>
+
       <li>
         <button onClick={handleLogout}>Logout</button>
       </li>

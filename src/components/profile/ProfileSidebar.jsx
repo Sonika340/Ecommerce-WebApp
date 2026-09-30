@@ -6,21 +6,30 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 
 const ProfileSidebar = () => {
   const { user } = useAuth();
+
   return (
     <aside className={Styles.sidebar}>
       <picture>
-        <Link to={"update-profile-picture"} className={Styles.profilePic}>
+        <Link
+          to="update-profile-picture"
+          className={Styles.profilePic}
+        >
           <HiOutlinePencilAlt />
-         <img src={user?.avatar?.url} alt="" />
+
+          <img
+            src={user?.avatar?.url}
+            alt={user?.name || "Profile"}
+          />
         </Link>
       </picture>
 
       <figcaption>
-        <Link to={"update-user-info"}>
+        <Link to="update-user-info">
           <span className={Styles.icon}>
             <FaPencilAlt />
           </span>
         </Link>
+
         <h1>{user?.name}</h1>
       </figcaption>
     </aside>

@@ -177,3 +177,88 @@
     right: 0;
     font-size: 35px;
 }
+/* ================================
+   SIDEBAR MENU
+================================ */
+
+.sidebarMenu {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  padding: 14px 20px;
+
+  text-decoration: none;
+  color: #714cb6;
+
+  background: #fff;
+  border: 1px solid #714cb6;
+  border-radius: 5px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.sidebarLink svg {
+  font-size: 18px;
+}
+
+.sidebarLink:hover {
+  background: #714cb6;
+  color: #fff;
+}
+.dashboardSidebar {
+  flex-basis: 30%;
+  padding: 10px;
+  background: #714cb64a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboardSidebar .sidebar {
+  width: 100%;
+  background: transparent;
+  padding: 0;
+}
+/* ================================
+   USER DASHBOARD LAYOUT
+================================ */
+
+.dashboardLayout {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.dashboardSidebar {
+  flex: 0 0 30%;
+  width: 30%;
+  min-height: 100%;
+  padding: 10px;
+  background: #714cb64a;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboardSidebar .sidebar {
+  width: 100%;
+  flex-basis: auto;
+  background: transparent;
+  padding: 0;
+}
+
+.dashboardContent {
+  flex: 1;
+  width: 70%;
+  padding: 20px;
+}

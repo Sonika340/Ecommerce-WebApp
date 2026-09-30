@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { createCourse } from "../services/api/courseService";
+import { useCourse } from "../state-mangement/CourseContextAPI";
 
 import styles from "./CreateCourse.module.css";
 
