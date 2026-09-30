@@ -8,18 +8,18 @@ const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-const {
-  currentCourse,
-  loading,
-  error,
-  getCourse,
-} = useCourse();
- useEffect(() => {
-  if (id) {
-    getCourse(id);
-  }
-}, [id]);
+  const {
+    currentCourse,
+    loading,
+    error,
+    getCourse,
+  } = useCourse();
 
+  useEffect(() => {
+    if (id) {
+      getCourse(id);
+    }
+  }, [id]);
 
   // =====================================
   // LOADING
@@ -218,8 +218,6 @@ const {
           >
             Edit Course
           </button>
-
-
           {/* DEMO */}
 
           {demoUrl && (

@@ -8,6 +8,7 @@ import styles from "./CreateCourse.module.css";
 
 const CreateCourse = () => {
   const navigate = useNavigate();
+  const { createNewCourse } = useCourse();
 
   const [loading, setLoading] = useState(false);
 
@@ -222,7 +223,7 @@ const CreateCourse = () => {
       );
 
       const response =
-        await createCourse(payload);
+        await createNewCourse(payload);
 
       console.log(
         "CREATE COURSE RESPONSE:",

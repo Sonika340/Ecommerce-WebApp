@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-
-import {
-    getCourseById,
-    editCourse,
-} from "../services/api/courseService";
+import { useCourse } from "../state-mangement/CourseContextAPI";
 
 import styles from "./EditCourse.module.css";
 
 const EditCourse = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const {
+        currentCourse,
+        getCourse,
+        updateCourse,
+    } = useCourse();
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -21,6 +22,7 @@ const EditCourse = () => {
         description: "",
         price: "",
         estimatedPrice: "",
+        thumbnail: "",
         thumbnailPublicId: "",
         tags: "",
         level: "Beginner",
@@ -48,89 +50,12 @@ const EditCourse = () => {
             try {
                 setLoading(true);
 
-                const response = await getCourseById(id);
-
-                console.log("EDIT COURSE RESPONSE:", response);
-
-                const course =
-                    response?.course ||
-                    response?.data?.course ||
-                    response?.data ||
-                    response;
-
-                console.log("EDIT COURSE DATA:", course);
-
-                if (!course) {
-                    toast.error("Course not found");
-                    navigate("/courses");
-                    return;
-                }
-
-                setForm({
-                    name: course.name || "",
-                    description: course.description || "",
-                    price: course.price ?? "",
-                    estimatedPrice: course.estimatedPrice ?? "",
-
-                    thumbnail:
-                        typeof course.thumbnail === "string"
-                            ? course.thumbnail
-                            : course.thumbnail?.url || "",
-
-                    thumbnailPublicId:
-                        typeof course.thumbnail === "object"
-                            ? course.thumbnail?.public_id || ""
-                            : "",
-
-                    tags: course.tags || "",
-                    level: course.level || "Beginner",
-                    demoUrl: course.demoUrl || "",
-                });
-
-                setBenefits(
-                    course.benefits?.length
-                        ? course.benefits.map((item) => ({
-                            title:
-                                typeof item === "string"
-                                    ? item
-                                    : item?.title || "",
-                        }))
-                        : [{ title: "" }]
-                );
-
-                setPrerequisites(
-                    course.prerequisites?.length
-                        ? course.prerequisites.map((item) => ({
-                            title:
-                                typeof item === "string"
-                                    ? item
-                                    : item?.title || "",
-                        }))
-                        : [{ title: "" }]
-                );
-
-                setCourseData(
-                    course.courseData?.length
-                        ? course.courseData.map((video) => ({
-                            title: video.title || "",
-                            description: video.description || "",
-                            videoUrl: video.videoUrl || "",
-                            videoSection: video.videoSection || "",
-                            videoLength: video.videoLength ?? 0,
-                        }))
-                        : [
-                            {
-                                title: "",
-                                description: "",
-                                videoUrl: "",
-                                videoSection: "",
-                                videoLength: 0,
-                            },
-                        ]
-                );
+                await getCourse(id);
             } catch (error) {
-                console.error("FETCH COURSE ERROR:", error);
-                console.error("ERROR RESPONSE:", error?.response?.data);
+                console.error(
+                    "FETCH COURSE ERROR:",
+                    error
+                );
 
                 toast.error(
                     error?.response?.data?.message ||
@@ -144,7 +69,82 @@ const EditCourse = () => {
         if (id) {
             fetchCourse();
         }
-    }, [id, navigate]);
+    }, [id]);
+    //-----------------------------------------------
+    useEffect(() => {
+        if (!currentCourse) {
+            return;
+        }
+
+        console.log(
+            "EDIT COURSE FROM CONTEXT:",
+            currentCourse
+        );
+
+        setForm({
+            name: currentCourse.name || "",
+            description: currentCourse.description || "",
+            price: currentCourse.price ?? "",
+            estimatedPrice:
+                currentCourse.estimatedPrice ?? "",
+
+            thumbnail:
+                typeof currentCourse.thumbnail === "string"
+                    ? currentCourse.thumbnail
+                    : currentCourse.thumbnail?.url || "",
+
+            thumbnailPublicId:
+                typeof currentCourse.thumbnail === "object"
+                    ? currentCourse.thumbnail?.public_id || ""
+                    : "",
+
+            tags: currentCourse.tags || "",
+            level: currentCourse.level || "Beginner",
+            demoUrl: currentCourse.demoUrl || "",
+        });
+
+        setBenefits(
+            currentCourse.benefits?.length
+                ? currentCourse.benefits.map((item) => ({
+                    title:
+                        typeof item === "string"
+                            ? item
+                            : item?.title || "",
+                }))
+                : [{ title: "" }]
+        );
+
+        setPrerequisites(
+            currentCourse.prerequisites?.length
+                ? currentCourse.prerequisites.map((item) => ({
+                    title:
+                        typeof item === "string"
+                            ? item
+                            : item?.title || "",
+                }))
+                : [{ title: "" }]
+        );
+
+        setCourseData(
+            currentCourse.courseData?.length
+                ? currentCourse.courseData.map((video) => ({
+                    title: video.title || "",
+                    description: video.description || "",
+                    videoUrl: video.videoUrl || "",
+                    videoSection: video.videoSection || "",
+                    videoLength: video.videoLength ?? 0,
+                }))
+                : [
+                    {
+                        title: "",
+                        description: "",
+                        videoUrl: "",
+                        videoSection: "",
+                        videoLength: 0,
+                    },
+                ]
+        );
+    }, [currentCourse]);
 
     // -----------------------------
     // Basic input handler
@@ -289,7 +289,7 @@ const EditCourse = () => {
 
             console.log("EDIT COURSE PAYLOAD:", payload);
 
-            const response = await editCourse(id, payload);
+            const response = await updateCourse(id, payload);
 
             console.log("EDIT COURSE SUCCESS RESPONSE:", response);
 
