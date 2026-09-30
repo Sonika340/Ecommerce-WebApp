@@ -22,6 +22,10 @@ const AdminDashboard = () => {
             <Link to="/courses">
               View Courses
             </Link>
+
+            <Link to="/admin/admin-dashboard/delete-course">
+              Delete Course
+            </Link>
           </nav>
         </aside>
 

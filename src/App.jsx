@@ -5,6 +5,7 @@ import {
   Routes,
 } from "react-router-dom";
 
+
 import "./App.css";
 
 // Layout
@@ -40,6 +41,7 @@ import Courses from "./pages/Courses";
 import CourseDetails from "./pages/CourseDetails";
 import CreateCourse from "./pages/CreateCourse";
 import EditCourse from "./pages/EditCourse";
+import DeleteCourse from "./pages/DeleteCourse";
 
 // Home
 import HomePage from "./pages/HomePage";
@@ -169,6 +171,10 @@ const App = () => {
                     <Route
                       path="edit-course/:id"
                       element={<EditCourse />}
+                    />
+                    <Route
+                      path="delete-course"
+                      element={<DeleteCourse />}
                     />
                   </Route>
 
