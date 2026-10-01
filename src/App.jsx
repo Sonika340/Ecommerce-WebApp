@@ -1,10 +1,5 @@
 import { Fragment } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 
@@ -43,6 +38,9 @@ import CreateCourse from "./pages/CreateCourse";
 import EditCourse from "./pages/EditCourse";
 import DeleteCourse from "./pages/DeleteCourse";
 
+//notification
+import Notifications from "./components/Admin/Notifications";
+
 // Home
 import HomePage from "./pages/HomePage";
 
@@ -52,7 +50,6 @@ const App = () => {
       <Router>
         <section id="navbar">
           <article className="container">
-
             {/* Navbar */}
             <aside className="top_header">
               <Navbar />
@@ -61,74 +58,39 @@ const App = () => {
             {/* Main Content */}
             <main className="main">
               <Routes>
-
                 {/* =========================
                     PUBLIC ROUTES
                 ========================== */}
 
-                <Route
-                  path="/"
-                  element={<HomePage />}
-                />
+                <Route path="/" element={<HomePage />} />
 
-                <Route
-                  path="/courses"
-                  element={<Courses />}
-                />
+                <Route path="/courses" element={<Courses />} />
 
-                <Route
-                  path="/courses/:id"
-                  element={<CourseDetails />}
-                />
+                <Route path="/courses/:id" element={<CourseDetails />} />
 
                 {/* Auth */}
-                <Route
-                  path="/auth/register"
-                  element={<Register />}
-                />
+                <Route path="/auth/register" element={<Register />} />
 
-                <Route
-                  path="/auth/activate"
-                  element={<ActivationCode />}
-                />
+                <Route path="/auth/activate" element={<ActivationCode />} />
 
-                <Route
-                  path="/auth/login"
-                  element={<Login />}
-                />
+                <Route path="/auth/login" element={<Login />} />
 
                 {/* =========================
                     AUTHENTICATED USER ROUTES
                 ========================== */}
 
                 <Route element={<ProtectedRoute />}>
-
                   {/* Common Dashboard URL */}
-                  <Route
-                    path="/dashboard"
-                    element={<DashboardRedirect />}
-                  />
+                  <Route path="/dashboard" element={<DashboardRedirect />} />
 
                   {/* User Dashboard */}
-                  <Route
-                    path="/user/dashboard"
-                    element={<UserDashboard />}
-                  >
-                    <Route
-                      index
-                      element={<UserDashboardHome />}
-                    />
+                  <Route path="/user/dashboard" element={<UserDashboard />}>
+                    <Route index element={<UserDashboardHome />} />
                   </Route>
 
                   {/* User Profile */}
-                  <Route
-                    path="/user/profile"
-                    element={<ProfileDashboard />}
-                  >
-                    <Route
-                      index
-                      element={<ProfileIndexPage />}
-                    />
+                  <Route path="/user/profile" element={<ProfileDashboard />}>
+                    <Route index element={<ProfileIndexPage />} />
 
                     <Route
                       path="update-user-info"
@@ -140,7 +102,6 @@ const App = () => {
                       element={<UpdataProfilePicture />}
                     />
                   </Route>
-
                 </Route>
 
                 {/* =========================
@@ -148,41 +109,25 @@ const App = () => {
                 ========================== */}
 
                 <Route element={<AdminRoute />}>
-
                   <Route
                     path="/admin/admin-dashboard"
                     element={<AdminDashboard />}
                   >
-                    <Route
-                      index
-                      element={<GetAllUsers />}
-                    />
+                    <Route index element={<GetAllUsers />} />
 
-                    <Route
-                      path="user/:id"
-                      element={<SingleUser />}
-                    />
+                    <Route path="user/:id" element={<SingleUser />} />
 
-                    <Route
-                      path="create-course"
-                      element={<CreateCourse />}
-                    />
+                    <Route path="create-course" element={<CreateCourse />} />
 
-                    <Route
-                      path="edit-course/:id"
-                      element={<EditCourse />}
-                    />
-                    <Route
-                      path="delete-course"
-                      element={<DeleteCourse />}
-                    />
+                    <Route path="edit-course/:id" element={<EditCourse />} />
+                    <Route path="delete-course" element={<DeleteCourse />} />
+
+                     // Notification
+                    <Route path="notifications" element={<Notifications />} /> 
                   </Route>
-
                 </Route>
-
               </Routes>
             </main>
-
           </article>
         </section>
       </Router>

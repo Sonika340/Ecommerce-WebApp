@@ -23,3 +23,16 @@ export const deleteUser = async(id) =>{
   let {data} = await api.delete(`/auth/delete-user/${id}`);
   return data;
 }
+
+// Notification getALL
+export const fetchAllNotifications = async()=>{
+  const {data} =await api.get("/notifications/get-all-notification")
+  return data
+}
+
+/* Update Notification */
+export const updateNotificationStatus= async (id)=>{
+  const {data}=await api.put(`/notifications/update-notification-status/${id}`);
+
+  return data;
+};
