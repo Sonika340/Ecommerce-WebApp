@@ -6,9 +6,10 @@ import {
   GetMe,
   LogoutServiceApi,
   UpdateUserInfoApi,
-  UpdateProfilePictureApi,
+  UpdateProfilePictureApi, 
 } from "../services/api/authServices";
-import { deleteUser, fetchAllUsers, updateRole } from "../services/api/adminServices";
+import { deleteUser, fetchAllUsers, updateRole,fetchAllNotifications,
+   updateNotificationStatus, } from "../services/api/adminServices";
 
 
 export const AuthContext = createContext();
@@ -164,6 +165,35 @@ export const AuthProvider = ({ children }) => {
 
   /*------------------ADMIN DATA ENDS HERE ------------------*/
 
+
+  //notification - get method
+const getAllNotificationsApi = async () => {
+  try {
+    const data = await fetchAllNotifications();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch notifications:", error);
+    throw error;
+  }
+};
+
+// notification update
+const updateNotificationStatusApi = async (id) => {
+  try {
+    const data = await updateNotificationStatus(id);
+    return data;
+  } catch (error) {
+    console.error(
+      "Failed to update notification status:",
+      error
+    );
+    throw error;
+  }
+};
+
+// notification update
+
+
   return (
     <>
       <AuthContext.Provider
@@ -180,7 +210,9 @@ export const AuthProvider = ({ children }) => {
           AllUsers,
           getAllUsersApi,
           updateRoleApi,
-          deleteUserApi
+          deleteUserApi,
+          getAllNotificationsApi,
+updateNotificationStatusApi,
         }}
       >
         {children}
