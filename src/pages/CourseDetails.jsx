@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/fetchUser";
 
@@ -12,14 +12,64 @@ const CourseDetails = () => {
 
   const { user } = useAuth();
 
+  // =====================================
+  // QUESTION STATE
+  // =====================================
+
+  const [question, setQuestion] = useState("");
+  const [questionLoading, setQuestionLoading] = useState(false);
+
   const isAdmin = user?.role?.toLowerCase() === "admin";
+
+  // =====================================
+  // COURSE CONTEXT
+  // =====================================
 
   const {
     currentCourse,
     loading,
     error,
     getCourse,
+    askQuestion,
   } = useCourse();
+
+  // =====================================
+  // ASK QUESTION
+  // =====================================
+
+  const handleAskQuestion = async (contentId) => {
+    if (!question.trim()) {
+      alert("Please enter your question");
+      return;
+    }
+
+    try {
+      setQuestionLoading(true);
+
+      await askQuestion({
+        question: question.trim(),
+        courseId: id,
+        contentId: contentId,
+      });
+
+      alert("Question sent to admin successfully!");
+
+      setQuestion("");
+    } catch (error) {
+      console.error("QUESTION ERROR:", error);
+
+      alert(
+        error?.response?.data?.message ||
+        "Failed to send question"
+      );
+    } finally {
+      setQuestionLoading(false);
+    }
+  };
+
+  // =====================================
+  // GET COURSE
+  // =====================================
 
   useEffect(() => {
     if (id) {
@@ -104,9 +154,13 @@ const CourseDetails = () => {
   const discount =
     estimatedPrice && price
       ? Math.round(
-          ((estimatedPrice - price) / estimatedPrice) * 100
-        )
+        ((estimatedPrice - price) / estimatedPrice) * 100
+      )
       : 0;
+
+  // =====================================
+  // UI
+  // =====================================
 
   return (
     <main className={styles.page}>
@@ -329,26 +383,71 @@ const CourseDetails = () => {
           <div>
 
             {courseData.map((video, index) => (
-              <article key={index}>
+
+              <article
+                key={video._id || index}
+              >
+
+                {/* LESSON TITLE */}
 
                 <h3>
                   {index + 1}. {video.title}
                 </h3>
 
+                {/* LESSON DESCRIPTION */}
+
                 <p>
                   {video.description}
                 </p>
 
+                {/* SECTION */}
+
                 <span>
                   Section: {video.videoSection}
                 </span>
+
+                {/* VIDEO LENGTH */}
 
                 <span>
                   {" "}
                   | Length: {video.videoLength} minutes
                 </span>
 
+                {/* ================================
+                    ASK QUESTION
+                ================================= */}
+
+                {!isAdmin && (
+                  <div className={styles.questionBox}>
+                    <h4>
+                      Have a question about this lesson?
+                    </h4>
+                    <textarea
+                      value={question}
+                      onChange={(e) =>
+                        setQuestion(e.target.value)
+                      }
+                      placeholder="Ask your question..."
+                      rows="4"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleAskQuestion(video._id)
+                      }
+                      disabled={questionLoading}
+                    >
+                      {questionLoading
+                        ? "Sending..."
+                        : "Ask Question"}
+                    </button>
+
+                  </div>
+                )}
+
               </article>
+
             ))}
 
           </div>

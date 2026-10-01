@@ -142,11 +142,7 @@ export const addCourseReview = async (id, payload) => {
 // ASK COURSE QUESTION
 // ===============================
 // PUT /api/v1/course/add-question
-//
-// Logged-in user
-// ===============================
-
-export const addCourseQuestion = async (payload) => {
+export const addQuestion = async (payload) => {
   const { data } = await api.put(
     "/course/add-question",
     payload
@@ -154,6 +150,11 @@ export const addCourseQuestion = async (payload) => {
 
   return data;
 };
+//
+// Logged-in user
+// ===============================
+
+
 
 
 // ===============================

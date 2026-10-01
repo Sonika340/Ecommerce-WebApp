@@ -6,6 +6,7 @@ import {
   createCourse,
   editCourse,
   deleteCourse,
+  addQuestion,
 } from "../services/api/courseService";
 
 const CourseContext = createContext();
@@ -159,7 +160,29 @@ export const CourseProvider = ({ children }) => {
       setLoading(false);
     }
   };
+ const askQuestion = async (payload) => {
+  try {
+    setLoading(true);
+    setError("");
 
+    const response = await addQuestion(payload);
+
+    console.log("QUESTION ADDED:", response);
+
+    return response;
+  } catch (error) {
+    console.error("ADD QUESTION ERROR:", error);
+
+    setError(
+      error?.response?.data?.message ||
+        "Failed to ask question"
+    );
+
+    throw error;
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <CourseContext.Provider
       value={{
@@ -172,6 +195,7 @@ export const CourseProvider = ({ children }) => {
         createNewCourse,
         updateCourse,
         removeCourse,
+        askQuestion,
       }}
     >
       {children}
