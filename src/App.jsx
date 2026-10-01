@@ -35,6 +35,7 @@ import DashboardRedirect from "./routes/DashboardRedirect";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import GetAllUsers from "./components/Admin/GetAllUsers";
 import SingleUser from "./components/Admin/SingleUser";
+import Layout from "./components/layouts/Layout";
 
 // Courses
 import Courses from "./pages/Courses";
@@ -172,15 +173,22 @@ const App = () => {
                       path="edit-course/:id"
                       element={<EditCourse />}
                     />
+
                     <Route
                       path="delete-course"
                       element={<DeleteCourse />}
                     />
+
+                    {/* Layout */}
+                    <Route
+                      path="layout"
+                      element={<Layout />}
+                    />
+
                   </Route>
 
                 </Route>
-
-              </Routes>
+                </Routes>
             </main>
 
           </article>

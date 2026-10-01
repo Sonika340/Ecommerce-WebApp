@@ -1,0 +1,202 @@
+.layout {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #32136c;
+  font-size: 28px;
+}
+
+.header p {
+  margin-top: 6px;
+  color: #777;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 25px;
+}
+
+.tabs button {
+  border: none;
+  background: #f3f3f3;
+  padding: 12px 25px;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 6px 6px 0 0;
+}
+
+.tabs button:hover {
+  background: #e8e2f4;
+}
+
+.activeTab {
+  background: #4f3b78 !important;
+  color: white;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  max-width: 900px;
+}
+
+.form h2 {
+  color: #32136c;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.field label {
+  font-weight: 600;
+  color: #333;
+}
+
+.field input,
+.field textarea,
+.categoryRow input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+}
+
+.field input:focus,
+.field textarea:focus,
+.categoryRow input:focus {
+  border-color: #4f3b78;
+}
+
+.preview {
+  width: 100%;
+  max-width: 500px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  padding: 20px;
+  margin-bottom: 15px;
+  background: #fafafa;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeader h3 {
+  color: #4f3b78;
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+.categoryRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.categoryRow input {
+  flex: 1;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.addButton {
+  background: #4f3b78;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.saveButton {
+  margin-top: 20px;
+  background: #32136c;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.saveButton:hover {
+  background: #4f3b78;
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
