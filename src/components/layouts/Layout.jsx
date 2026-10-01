@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import {
@@ -10,8 +11,9 @@ import {
 import Styles from "./layout.module.css";
 
 const Layout = () => {
-  const [activeType, setActiveType] = useState("banner");
+  const navigate = useNavigate();
 
+  const [activeType, setActiveType] = useState("banner");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [layoutExists, setLayoutExists] = useState(false);
@@ -57,6 +59,8 @@ const Layout = () => {
       setLayoutExists(false);
 
       const response = await getLayout(type);
+
+      console.log(`${type.toUpperCase()} LAYOUT RESPONSE:`, response);
 
       if (response?.success && response?.layout) {
         setLayoutExists(true);
@@ -113,7 +117,7 @@ const Layout = () => {
       setLayoutExists(false);
 
       console.log(
-        "Layout fetch error:",
+        `${type.toUpperCase()} FETCH ERROR:`,
         error.response?.data || error.message
       );
     } finally {
@@ -364,6 +368,12 @@ const Layout = () => {
         response = await createLayout(payload);
       }
 
+      console.log("LAYOUT SAVE RESPONSE:", response);
+
+      // =============================
+      // SUCCESS
+      // =============================
+
       if (response?.success) {
         toast.success(
           response.message ||
@@ -371,6 +381,22 @@ const Layout = () => {
         );
 
         setLayoutExists(true);
+
+        // =================================
+        // REDIRECT AFTER SUCCESSFUL SAVE
+        // =================================
+
+        if (activeType === "banner") {
+          navigate("/");
+        }
+
+        if (activeType === "faq") {
+          navigate("/faqs");
+        }
+
+        if (activeType === "categories") {
+          navigate("/categories");
+        }
       }
     } catch (error) {
       console.error(
@@ -393,6 +419,7 @@ const Layout = () => {
 
   return (
     <section className={Styles.layout}>
+
       {/* ===============================
           HEADER
       =============================== */}
@@ -413,6 +440,7 @@ const Layout = () => {
       =============================== */}
 
       <div className={Styles.tabs}>
+
         <button
           type="button"
           className={
@@ -444,10 +472,13 @@ const Layout = () => {
               ? Styles.activeTab
               : ""
           }
-          onClick={() => setActiveType("categories")}
+          onClick={() =>
+            setActiveType("categories")
+          }
         >
           Categories
         </button>
+
       </div>
 
       {/* ===============================
@@ -463,6 +494,7 @@ const Layout = () => {
           className={Styles.form}
           onSubmit={handleSubmit}
         >
+
           {/* =============================
               BANNER
           ============================= */}
@@ -555,7 +587,9 @@ const Layout = () => {
                         onClick={() =>
                           removeFaq(index)
                         }
-                        className={Styles.deleteButton}
+                        className={
+                          Styles.deleteButton
+                        }
                       >
                         Remove
                       </button>
@@ -667,11 +701,13 @@ const Layout = () => {
             {saving
               ? "Saving..."
               : layoutExists
-              ? "Update Layout"
-              : "Create Layout"}
+                ? "Update Layout"
+                : "Create Layout"}
           </button>
+
         </form>
       )}
+
     </section>
   );
 };
