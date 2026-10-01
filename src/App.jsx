@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "./App.css";
 
@@ -58,6 +59,9 @@ import EditCourse from "./pages/EditCourse";
 import DeleteCourse from "./pages/DeleteCourse";
 
 // ===============================
+//notification
+import Notifications from "./components/Admin/Notifications";
+
 // Home
 // ===============================
 import HomePage from "./pages/HomePage";
@@ -81,6 +85,7 @@ const App = () => {
             {/* ===============================
                 NAVBAR
             =============================== */}
+            {/* Navbar */}
             <aside className="top_header">
               <Navbar />
             </aside>
@@ -94,6 +99,7 @@ const App = () => {
               <Routes>
 
                 {/* ===============================
+                {/* =========================
                     PUBLIC ROUTES
                 =============================== */}
 
@@ -135,16 +141,18 @@ const App = () => {
                   path="/auth/register"
                   element={<Register />}
                 />
+                <Route path="/" element={<HomePage />} />
 
-                <Route
-                  path="/auth/activate"
-                  element={<ActivationCode />}
-                />
+                <Route path="/courses" element={<Courses />} />
 
-                <Route
-                  path="/auth/login"
-                  element={<Login />}
-                />
+                <Route path="/courses/:id" element={<CourseDetails />} />
+
+                {/* Auth */}
+                <Route path="/auth/register" element={<Register />} />
+
+                <Route path="/auth/activate" element={<ActivationCode />} />
+
+                <Route path="/auth/login" element={<Login />} />
 
 
                 {/* ===============================
@@ -158,29 +166,19 @@ const App = () => {
                     path="/dashboard"
                     element={<DashboardRedirect />}
                   />
+                  {/* Common Dashboard URL */}
+                  <Route path="/dashboard" element={<DashboardRedirect />} />
 
 
                   {/* User Dashboard */}
-                  <Route
-                    path="/user/dashboard"
-                    element={<UserDashboard />}
-                  >
-                    <Route
-                      index
-                      element={<UserDashboardHome />}
-                    />
+                  <Route path="/user/dashboard" element={<UserDashboard />}>
+                    <Route index element={<UserDashboardHome />} />
                   </Route>
 
 
                   {/* User Profile */}
-                  <Route
-                    path="/user/profile"
-                    element={<ProfileDashboard />}
-                  >
-                    <Route
-                      index
-                      element={<ProfileIndexPage />}
-                    />
+                  <Route path="/user/profile" element={<ProfileDashboard />}>
+                    <Route index element={<ProfileIndexPage />} />
 
                     <Route
                       path="update-user-info"
@@ -192,7 +190,6 @@ const App = () => {
                       element={<UpdataProfilePicture />}
                     />
                   </Route>
-
                 </Route>
 
 
@@ -201,7 +198,6 @@ const App = () => {
                 =============================== */}
 
                 <Route element={<AdminRoute />}>
-
                   <Route
                     path="/admin/admin-dashboard"
                     element={<AdminDashboard />}
@@ -244,13 +240,22 @@ const App = () => {
                     />
 
                   </Route>
+                    <Route index element={<GetAllUsers />} />
 
+                    <Route path="user/:id" element={<SingleUser />} />
+
+                    <Route path="create-course" element={<CreateCourse />} />
+
+                    <Route path="edit-course/:id" element={<EditCourse />} />
+                    <Route path="delete-course" element={<DeleteCourse />} />
+
+                     // Notification
+                    <Route path="notifications" element={<Notifications />} /> 
+                  </Route>
                 </Route>
-
               </Routes>
 
             </main>
-
           </article>
 
         </section>
