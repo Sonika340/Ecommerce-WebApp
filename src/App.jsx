@@ -4,7 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 
 import "./App.css";
 
@@ -238,30 +238,31 @@ const App = () => {
                       path="layout"
                       element={<Layout />}
                     />
+                    {/* Notifications */}
+                    <Route
+                      path="notifications"
+                      element={<Notifications />}
+                    />
+
 
                   </Route>
-                    <Route index element={<GetAllUsers />} />
+                  <Route index element={<GetAllUsers />} />
 
-                    <Route path="user/:id" element={<SingleUser />} />
+                  <Route path="user/:id" element={<SingleUser />} />
 
-                    <Route path="create-course" element={<CreateCourse />} />
+                  <Route path="create-course" element={<CreateCourse />} />
 
-                    <Route path="edit-course/:id" element={<EditCourse />} />
-                    <Route path="delete-course" element={<DeleteCourse />} />
-
-                     // Notification
-                    <Route path="notifications" element={<Notifications />} /> 
-                  </Route>
+                  <Route path="edit-course/:id" element={<EditCourse />} />
+                  <Route path="delete-course" element={<DeleteCourse />} />
+                  <Route path="notifications" element={<Notifications />} />
                 </Route>
-              </Routes>
 
+              </Routes>
             </main>
           </article>
-
         </section>
-
       </Router>
-    </Fragment>
+    </Fragment >
   );
 };
 
